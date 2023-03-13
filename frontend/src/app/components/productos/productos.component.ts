@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Buffer } from 'buffer';
 import { ProductoService } from 'src/app/services/producto.service';
+import { Buffer } from 'buffer';
 
 @Component({
   selector: 'app-productos',
@@ -25,16 +25,7 @@ export class ProductosComponent implements OnInit {
 
   allCategorias = [];
 
-  allProductos = [
-    {
-      id : '',
-      nombre : '',
-      descripcion : '',
-      precio: '',
-      imagen: '',
-      ImagenTipo: ""
-    }
-  ];
+  allProductos = [];
   getProductos(){
     this.productoServicio.getProductos().subscribe(data => {
 
@@ -52,10 +43,10 @@ export class ProductosComponent implements OnInit {
 
   convertirImagenes(){
     this.allProductos.forEach(producto=>{
-      let buff = new Buffer(producto.imagen);
+      let buff = new Buffer(producto.Imagen);
       let stringToBase64 = buff.toString('base64');
       let imagen = 'data:'+producto.ImagenTipo+';base64,'+stringToBase64;
-      producto.imagen = imagen;
+      producto.Imagen = imagen;
     });
   }
 

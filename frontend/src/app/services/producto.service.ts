@@ -16,4 +16,9 @@ export class ProductoService {
     return this.http.get(this.url+'/getAll');
   };
 
+  getProductoDetalle(id: number):Observable<any> {
+
+    return this.http.get(this.url+`/detalles/${id}`);
+  };
+
 }
