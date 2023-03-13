@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { NgxDropzoneModule } from 'ngx-dropzone';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -9,6 +9,7 @@ import { ProductosComponent } from './components/productos/productos.component';
 import { MisProductosComponent } from './components/mis-productos/mis-productos.component';
 import { RegistrarProductoComponent } from './components/registrar-producto/registrar-producto.component';
 import { DetallesProductoComponent } from './components/detalles-producto/detalles-producto.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,10 @@ import { DetallesProductoComponent } from './components/detalles-producto/detall
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxDropzoneModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

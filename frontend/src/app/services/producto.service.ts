@@ -11,6 +11,16 @@ export class ProductoService {
 
   constructor(private http:HttpClient) { }
 
+  postInsertNewProducto( req_body : any, id: number):Observable<any> {
+
+    return this.http.post(this.url+`/nuevoProducto/${id}`,req_body);
+  };
+
+  getDatosRegistroProducto():Observable<any> {
+
+    return this.http.get(this.url+'/datosregistroProducto');
+  };
+  
   getProductos():Observable<any> {
 
     return this.http.get(this.url+'/getAll');
