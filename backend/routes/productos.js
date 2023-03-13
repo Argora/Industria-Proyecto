@@ -1,12 +1,9 @@
 //Rutas productos
-const { Router } = require('express');
 const express = require('express');
 const router = express.Router();
+const productoController = require('../controller/productoController');
 
 //api/productos
-
-router.post('/', () => {
-    console.log('creando producto...');
-})
+router.get('/getAll', productoController.getProductos);
 
 module.exports = router
