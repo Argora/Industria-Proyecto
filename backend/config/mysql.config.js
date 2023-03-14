@@ -3,10 +3,10 @@ const mysql = require('mysql');
 
 function conectar() { 
     conexion =  mysql.createConnection({
-      host:"bavvsia83xxkjbvtnugt-mysql.services.clever-cloud.com",
-      user:"umobi57mt7ynmn2t" ,
-      password: "tYpFy9XU62D8Mam2PC9p",
-      database: "bavvsia83xxkjbvtnugt"
+      host:"base01.c7i4ct5s8ir5.us-east-1.rds.amazonaws.com",
+      user:"admin" ,
+      password: "base1234",
+      database: "Base"
 });
 
 conexion.connect((err)=>{
