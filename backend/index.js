@@ -18,6 +18,7 @@ app.use(bodyParser.urlencoded({extended : false}));
 //ROUTES
 
 app.use('/api/productos',require('./routes/productos'));
+app.use('/api/usuarios', require('./routes/usuarios'));
 
 //SETTINGS
 

@@ -10,6 +10,10 @@ import { MisProductosComponent } from './components/mis-productos/mis-productos.
 import { RegistrarProductoComponent } from './components/registrar-producto/registrar-producto.component';
 import { DetallesProductoComponent } from './components/detalles-producto/detalles-producto.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PerfilComponent } from './components/perfil/perfil.component';
+import { ChatComponent } from './components/chat/chat.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegistroComponent } from './components/registro/registro.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +21,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ProductosComponent,
     MisProductosComponent,
     RegistrarProductoComponent,
-    DetallesProductoComponent
+    DetallesProductoComponent,
+    PerfilComponent,
+    ChatComponent,
+    LoginComponent,
+    RegistroComponent
   ],
   imports: [
     BrowserModule,
