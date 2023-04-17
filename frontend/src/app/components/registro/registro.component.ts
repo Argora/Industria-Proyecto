@@ -96,7 +96,7 @@ municipios=[];
             confirmButtonText: 'OK'
           }).then((result) => {
             if (result.isConfirmed) {
-              this.router.navigate(['login'])
+              //this.router.navigate(['login'])
             }
           });
 

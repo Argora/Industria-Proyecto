@@ -18,7 +18,7 @@ const getVerifyTemplate = (name,token)=>{
         <div class="container" id="email_content">
         <h2>Hola ${name}</h2>
     <p>Para confirmar tu cuenta , ingresa al siguiente enlace</p>
-    <a href="${url}/confirmarCuenta/${token}"> confirmar cuenta </a>
+    <a href="${url}/confirmarUsuario/${token}"> confirmar cuenta </a>
     
         </div>
         
@@ -28,31 +28,22 @@ const getVerifyTemplate = (name,token)=>{
     `;
 };
 
-const mail ={
-    user:'',
-    pass:''
+const config = {
+    host: "smtp.gmail.com", // hostname
+    port: 587, // port for secure SMTP
+    auth: {
+      user: 'proyectois902@gmail.com',
+      pass: 'dankjzxdtzebtlyq'
+    }
 };
 
-var transporter = nodemailer.createTransport(({
-    host: "smtp-mail.outlook.com", // hostname
-    secureConnection: false, // TLS requires secureConnection to be false
-    port: 587, // port for secure SMTP
-    tls: {
-       ciphers:'SSLv3'
-    },
-    //service: 'gmail',
-    //host: 'smtp.gmail.com',
-    auth: {
-      user: mail.user,
-      pass: mail.pass
-    }
-  }));
+const transporter = nodemailer.createTransport(config);
   
 
 const sendEmailVerify = async (email,subject,html)=>{
       try {
         await transporter.sendMail({
-            from: `NTT: <${mail.user}>`, // sender address
+            from: 'ProyectoIS902<no-reply@proyectois902>', // sender address
             to: email, // list of receivers
             subject, // Subject line
             text: "Verificar", // plain text body
@@ -62,4 +53,10 @@ const sendEmailVerify = async (email,subject,html)=>{
       } catch (error) {
           console.log('error en el email ',error);
       }
+};
+
+
+module.exports ={
+    sendEmailVerify,
+    getVerifyTemplate
 };

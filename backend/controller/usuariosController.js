@@ -2,7 +2,8 @@ const fs = require('fs');
 const path =require('path');
 const bcrypt = require('bcrypt');
 const MySQLBD = require("../config/mysql.config");
-const {getVerifyTemplate} = require('../config/correo.config');
+const {getVerifyTemplate, sendEmailVerify} = require('../config/correo.config');
+const {getTokenEmail, getTokenData} = require('../config/token.config');
 
 exports.getDeptosMunicipios = async (req, res) => {
     
@@ -122,3 +123,57 @@ exports.registrarUsuario = async (req, res) => {
     
         });
     };
+
+    exports.confirmarUsuario = async (req, res) => {
+
+        //Obtener token verificación
+        const {token} = req.body;
+        //Verificar token
+        const data = getTokenData(token);
+   
+        if(!data){
+           res.send({mensaje:'Error en data token'});
+           console.log("Error en data token");
+         }else{
+   
+         //Extraer email del usuario
+         const email = data.data;
+   
+         //conexión a base de datos
+         const conectBD = MySQLBD.conectar();
+         console.log('asdf')
+         //Consultar usuario en base de datos
+         conectBD.query(`SELECT * FROM Usuarios WHERE email = '${email}'`, (err, User) => {
+   
+        
+           //Verificar si el usuario
+           if (!User.length) {
+     
+               res.send({mensaje:'Usuario no existe'});
+               console.log("Close Connection");
+               conectBD.end();
+   
+           }else{
+               //Habilitar usuario en base de datos
+               conectBD.query(`UPDATE Usuarios SET estadoHabilitacion = TRUE WHERE email = '${User[0].email}'`, (err, result) => {
+   
+                   if(err){
+               
+                       res.send({mensaje:'Error al habilitar usuario'});
+   
+                   }
+                   else{
+        
+                       res.send({mensaje:'Usuario habilitado'});
+                   };
+   
+                   console.log("Close Connection");
+                   conectBD.end();
+   
+               });
+           }
+   
+         });
+       
+       }
+   };

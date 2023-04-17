@@ -14,6 +14,7 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistroComponent } from './components/registro/registro.component';
+import { ConfirmarCuentaComponent } from './components/confirmar-cuenta/confirmar-cuenta.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { RegistroComponent } from './components/registro/registro.component';
     PerfilComponent,
     ChatComponent,
     LoginComponent,
-    RegistroComponent
+    RegistroComponent,
+    ConfirmarCuentaComponent
   ],
   imports: [
     BrowserModule,

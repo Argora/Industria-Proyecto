@@ -1,16 +1,16 @@
 const jwt = require('jsonwebtoken');
-require ('dotenv').config();
+require('dotenv').config();
 
 const getTokenEmail = (email) =>{
     return jwt.sign(
         {data:email},
-        process.env.SECRET,
+        process.env.JWT_SECRET,
         {expiresIn:'1h'});
 };
 
 const getTokenData = (token) =>{
     let data = null;
-    jwt.verify(token,'SECRET',(err,decoded)=>{
+    jwt.verify(token,process.env.JWT_SECRET,(err,decoded)=>{
         if(err){
             console.log('Error al optener data del token');
         }else{
@@ -23,6 +23,6 @@ const getTokenData = (token) =>{
 };
 
 module.exports = {
-    getToken,
+    getTokenEmail,
     getTokenData
 };

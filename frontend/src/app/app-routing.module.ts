@@ -6,10 +6,12 @@ import { MisProductosComponent } from './components/mis-productos/mis-productos.
 import { ProductosComponent } from './components/productos/productos.component';
 import { RegistrarProductoComponent } from './components/registrar-producto/registrar-producto.component';
 import { RegistroComponent } from './components/registro/registro.component';
+import { ConfirmarCuentaComponent } from './components/confirmar-cuenta/confirmar-cuenta.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
+  { path: 'confirmarUsuario/:token', component: ConfirmarCuentaComponent },
   { path: 'productos', component: ProductosComponent },
   { path: 'productos/detalles/:id', component: DetallesProductoComponent },
   { path: 'productos/misProductos', component: MisProductosComponent },

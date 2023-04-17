@@ -21,4 +21,9 @@ export class UsuarioService {
     return this.http.post(this.url+'/registro',req_body);
   };
 
+  postConfirmarCuenta( req_body : any ):Observable<any> {
+
+    return this.http.post(this.url+'/confirmarUsuario',req_body);
+  };
+
 }
