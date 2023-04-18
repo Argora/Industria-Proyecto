@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
       
         if(data.acceso){
           localStorage.setItem('token', data.token);
-          console.log(data);
+          console.log(data.mensaje);
           if(parseInt(data.usuario.TipoUsuario)==1){
             this.router.navigate(['productos']);
           }

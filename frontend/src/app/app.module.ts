@@ -15,6 +15,9 @@ import { ChatComponent } from './components/chat/chat.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { ConfirmarCuentaComponent } from './components/confirmar-cuenta/confirmar-cuenta.component';
+import { HomeComponent } from './components/home/home.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,10 @@ import { ConfirmarCuentaComponent } from './components/confirmar-cuenta/confirma
     ChatComponent,
     LoginComponent,
     RegistroComponent,
-    ConfirmarCuentaComponent
+    ConfirmarCuentaComponent,
+    HomeComponent,
+    NavbarComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
