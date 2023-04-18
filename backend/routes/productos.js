@@ -9,5 +9,7 @@ router.get('/getAll', productoController.getProductos);
 router.get('/detalles/:id', productoController.getProductoDetalle)
 router.post('/nuevoProducto/:id',multer.cargarArchivo.array('imagenesProducto',4),productoController.nuevoProducto);
 router.get('/datosregistroProducto',productoController.getAll_categorias);
+router.get('/borrarProducto/:id', productoController.inhabilitarProducto);
+router.get('/getProductosUsuario/:id', productoController.getProductosUsuario);
 
 module.exports = router

@@ -168,3 +168,68 @@ exports.getProductoDetalle = async (req,res) =>{
 
 };
 
+exports.getProductosUsuario = async (req,res) =>{
+
+    const usuarioId = req.params.id;
+
+    const conectBD = MySQLBD.conectar();
+
+    conectBD.query(`SELECT p.*,i.productoImagen Imagen ,i.contentType ImagenTipo,u.nombre Usuario, u.Id UsuarioId, c.nombre Categoria, c.Id CategoriaId FROM Productos p 
+    INNER JOIN ImagenesProducto i ON p.Id = i.productoId
+    INNER JOIN Categorias c ON c.Id = p.categoriaId
+	INNER JOIN Usuarios u ON u.Id = p.personaId  
+	AND p.personaId = ${usuarioId} AND p.estadoHabilitacion = TRUE 
+    GROUP BY p.Id
+    ORDER BY p.creacion DESC`, (err, ProductoRes) => {
+
+        if(err){
+            res.send({mensaje:'Error al buscar productos',exito:0})
+        }else{
+            if(ProductoRes.length){
+            res.send({mensaje:'Productos encontrados',productos:ProductoRes,usuario:{id:ProductoRes[0].UsuarioId,nombre:ProductoRes[0].Usuario},exito:1})
+            }else{
+            res.send({mensaje:'Este usuario no ha agreagdo productos',exito:0})  
+            }
+        }
+       
+        console.log("Close Connection");
+        conectBD.end(); 
+    });
+
+};
+
+exports.inhabilitarProducto = async (req,res) =>{
+
+    const productoId = req.params.id;
+
+    const conectBD = MySQLBD.conectar();
+
+    conectBD.query(`SELECT * FROM Productos WHERE Id = ${productoId} AND estadoHabilitacion = TRUE `, (err, ProductoRes) => {
+
+        if(err){
+            res.send({mensaje:'Error al buscar producto',exito:0});
+            console.log("Close Connection");
+            conectBD.end(); 
+        }else{
+            if(ProductoRes.length){
+                conectBD.query(`  UPDATE Productos SET estadoHabilitacion = FALSE  WHERE Id =  ${productoId} `, (err,  ProductoRes) => {
+                    
+                    if(err){res.send({mensaje:'Error al inhabilitarProducto',exito:0});}
+                    else{
+                    res.send({mensaje:'Producto dado de baja',exito:1})
+                     
+                }
+
+                });
+            }else{
+            res.send({mensaje:'No existe el producto',exito:0})  
+            }
+            console.log("Close Connection");
+            conectBD.end(); 
+        }
+       
+      
+    });
+
+};
+

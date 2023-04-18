@@ -31,4 +31,14 @@ export class ProductoService {
     return this.http.get(this.url+`/detalles/${id}`);
   };
 
+  getProductosUsuario(id: number):Observable<any> {
+
+    return this.http.get(this.url+`/getProductosUsuario/${id}`);
+  };
+
+  inhabilitarProducto(id: number):Observable<any> {
+
+    return this.http.get(this.url+`/inhabilitarProducto/${id}`);
+  };
+
 }

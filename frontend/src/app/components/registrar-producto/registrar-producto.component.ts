@@ -18,11 +18,14 @@ export class RegistrarProductoComponent implements OnInit {
     descripcion: new FormControl('', Validators.required),
     categorias: new FormControl('', Validators.required),
   });
+
+  idUsuario : number;
+
   constructor(
     private location: Location,
     private productoServicio : ProductoService,
     private usuarioServicio : UsuarioService, 
-    private _router : Router) { }
+    private router : Router) { }
 
   ngOnInit(): void {
     this.pruebaToken();
@@ -49,7 +52,7 @@ export class RegistrarProductoComponent implements OnInit {
       precio: product.precio,
       descripcion: product.descripcion,
       categoria: product.categorias,
-      usuarioId: 5
+      usuarioId: this.idUsuario
     }
     console.log(this.producto);
     if (!this.formulario.valid || !this.files.length) {
@@ -137,11 +140,12 @@ export class RegistrarProductoComponent implements OnInit {
       //console.log(localStorage.getItem('token'))
       if (data.exito) {
         console.log(data.mensaje);
+        this.idUsuario = data.data.data.id;
       }
       else {
         console.log(data.mensaje);
         localStorage.removeItem('token');
-        //this.router.navigate(['login']);
+        this.router.navigate(['login']);
       }
     })
   }
