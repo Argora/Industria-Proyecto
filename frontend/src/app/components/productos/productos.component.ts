@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductoService } from 'src/app/services/producto.service';
 import { Buffer } from 'buffer';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-productos',
@@ -17,9 +18,13 @@ export class ProductosComponent implements OnInit {
 
   id: number = 0;
 
-  constructor(private productoServicio : ProductoService, private router : Router) { }
+  constructor(
+    private productoServicio : ProductoService, 
+    private router : Router,
+    private usuarioServicio : UsuarioService) { }
 
   ngOnInit(): void {
+    this.pruebaToken();
     this.getProductos();
   }
 
@@ -30,7 +35,7 @@ export class ProductosComponent implements OnInit {
     this.productoServicio.getProductos().subscribe(data => {
 
       if (data.exito) {
-        console.log(data);
+        console.log(data.mensaje);
         this.allProductos = data.productos;
         this.convertirImagenes();
       }
@@ -48,6 +53,20 @@ export class ProductosComponent implements OnInit {
       let imagen = 'data:'+producto.ImagenTipo+';base64,'+stringToBase64;
       producto.Imagen = imagen;
     });
+  }
+
+  pruebaToken(){
+    this.usuarioServicio.postToken({token:localStorage.getItem('token')}).subscribe(data => {
+      //console.log(localStorage.getItem('token'))
+      if (data.exito) {
+        console.log(data.mensaje);
+      }
+      else {
+        console.log(data.mensaje);
+        localStorage.removeItem('token');
+        //this.router.navigate(['login']);
+      }
+    })
   }
 
 }

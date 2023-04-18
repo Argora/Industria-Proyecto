@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Buffer } from 'buffer';
 import { ProductoService } from 'src/app/services/producto.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-detalles-producto',
@@ -22,10 +23,12 @@ export class DetallesProductoComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private productoServicio : ProductoService
+    private productoServicio : ProductoService,
+    private usuarioServicio : UsuarioService
     ) { }
 
   ngOnInit(): void {
+    this.pruebaToken();
     this.obtenerIdProducto();
   }
 
@@ -73,6 +76,19 @@ export class DetallesProductoComponent implements OnInit {
     });
   }
 
+  pruebaToken(){
+    this.usuarioServicio.postToken({token:localStorage.getItem('token')}).subscribe(data => {
+      //console.log(localStorage.getItem('token'))
+      if (data.exito) {
+        console.log(data.mensaje);
+      }
+      else {
+        console.log(data.mensaje);
+        localStorage.removeItem('token');
+        //this.router.navigate(['login']);
+      }
+    })
+  }
 
 
 }

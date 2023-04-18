@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ProductoService } from 'src/app/services/producto.service';
 import Swal from 'sweetalert2';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-registrar-producto',
@@ -17,11 +18,14 @@ export class RegistrarProductoComponent implements OnInit {
     descripcion: new FormControl('', Validators.required),
     categorias: new FormControl('', Validators.required),
   });
-  constructor(private location: Location,
-    private productoServicio : ProductoService, private _router : Router) { }
+  constructor(
+    private location: Location,
+    private productoServicio : ProductoService,
+    private usuarioServicio : UsuarioService, 
+    private _router : Router) { }
 
   ngOnInit(): void {
-
+    this.pruebaToken();
     this.getDatosRegistroProducto();
   }
   files = [];
@@ -126,6 +130,20 @@ export class RegistrarProductoComponent implements OnInit {
       }
 
     }, err => console.log(err));
+  }
+
+  pruebaToken(){
+    this.usuarioServicio.postToken({token:localStorage.getItem('token')}).subscribe(data => {
+      //console.log(localStorage.getItem('token'))
+      if (data.exito) {
+        console.log(data.mensaje);
+      }
+      else {
+        console.log(data.mensaje);
+        localStorage.removeItem('token');
+        //this.router.navigate(['login']);
+      }
+    })
   }
 
 }

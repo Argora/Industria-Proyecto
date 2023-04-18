@@ -19,7 +19,7 @@ const getTokenData = (token) =>{
     let data = null;
     jwt.verify(token,process.env.JWT_SECRET,(err,decoded)=>{
         if(err){
-            console.log('Error al optener data del token');
+            console.log('token expirado o incorrecto');
         }else{
             data = decoded;
         }
@@ -27,6 +27,7 @@ const getTokenData = (token) =>{
 
     return data;
 };
+
 
 module.exports = {
     getTokenEmail,

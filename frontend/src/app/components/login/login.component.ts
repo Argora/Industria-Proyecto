@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.crearRegistroForm();
+    this.comprobarUsuario();
   }
 
   crearRegistroForm(): void{
@@ -84,7 +85,15 @@ export class LoginComponent implements OnInit {
   }
 
   comprobarUsuario(){
-    
+    if(localStorage.getItem('token')){
+      //console.log("Ya se ha iniciado sesión");
+      Swal.fire(
+        '',
+        'Ya se tiene una sesión activa',
+        'warning',
+      );
+      this.router.navigate(['productos']);
+    }
   }
 
 }

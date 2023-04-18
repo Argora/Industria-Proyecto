@@ -167,3 +167,4 @@ exports.getProductoDetalle = async (req,res) =>{
     });
 
 };
+

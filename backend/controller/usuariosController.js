@@ -3,7 +3,7 @@ const path =require('path');
 const bcrypt = require('bcrypt');
 const MySQLBD = require("../config/mysql.config");
 const {getVerifyTemplate, sendEmailVerify} = require('../config/correo.config');
-const {getTokenEmail, getTokenLogIn, getTokenData} = require('../config/token.config');
+const {getTokenEmail, getTokenLogIn, getTokenData, getTokenDataExpired} = require('../config/token.config');
 
 exports.getDeptosMunicipios = async (req, res) => {
     
@@ -163,8 +163,8 @@ exports.LoginUsuario = async (req, res) => {
                         //Si existe el usuario, se crea token de autorización para inicio de sesión
                         if(UsuarioRes[0].estadoHabilitacion){
                             const user = {
-                                id:UsuarioRes[0].Id,
-                                tipoUsuario:UsuarioRes[0].tipoUsuario
+                                "id":UsuarioRes[0].Id,
+                                "tipoUsuario":UsuarioRes[0].TipoUsuario
                             }
                             const token = getTokenLogIn(user);
                             res.send({"mensaje":"contraseña correcta","usuario":UsuarioRes[0],token,acceso:1},);
@@ -182,3 +182,14 @@ exports.LoginUsuario = async (req, res) => {
         }
     });
 };
+
+exports.verificarTiempoToken = async(req, res) => {
+    const {token} = req.body
+    const data = getTokenData(token);
+    if(!data){
+        res.send({mensaje:'Error token incorrecto o expirado', exito:0});
+    }else{
+        res.send({mensaje:'token funcional',data:data, exito:1});
+    }
+
+}
