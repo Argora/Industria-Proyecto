@@ -183,6 +183,151 @@ exports.LoginUsuario = async (req, res) => {
     });
 };
 
+exports.perfilUsuario = async (req, res) => {
+
+    const id = req.params.id;
+
+    const conectBD = MySQLBD.conectar();
+    //BUSCAR USUARIO
+    conectBD.query(`SELECT u.*, t.telefono, d.nombre AS departamento FROM Usuarios u 
+    INNER JOIN Telefonos t ON u.Id = t.personaId 
+    INNER JOIN Municipios m ON u.municipioId = m.Id 
+    INNER JOIN Departamentos d ON m.departamentoId = d.Id 
+    WHERE u.Id = '${id}' AND u.estadoHabilitacion = TRUE; `, (err, UsuarioRes) => {
+      
+        //REVISAR SI SE ENCONTRO EL USUARIO
+        if (!UsuarioRes.length) {
+
+            res.send({"mensaje":"Usuario No existe O se encuentra deshabilitado",exito:0});
+            console.log("Close Connection");
+            conectBD.end();
+
+        } else {
+
+            if(UsuarioRes[0].estadoHabilitacion){
+                res.send({"mensaje":"Usuario encontrado","usuario":UsuarioRes[0],exito:1},);
+            }else{
+                res.send({"mensaje":"El usuario no ha confirmado su cuenta",exito:0},); 
+            }
+            console.log("Close Connection");
+            conectBD.end();
+        }
+    });
+};
+
+exports.suscripcionesCliente = async (req,res)=>{
+
+    const clienteId = req.params.id;
+
+    const conectBD = MySQLBD.conectar();
+    conectBD.query(`SELECT c.nombre,s.* FROM Suscripciones s
+                    INNER JOIN Categorias c ON c.Id = s.categoriaId 
+                    AND s.clienteId = ${clienteId}
+                    AND s.estado = TRUE`, (err, SuscripcionRes) => {
+
+        if(err){
+            res.send({mensaje:'Error al buscar suscripciones',exito:0});
+            }else{
+
+                if(SuscripcionRes.length){
+                res.send({mensaje:'Suscripciones Encontradas',suscripciones:SuscripcionRes,exito:1});
+                }
+                else{
+                    res.send({mensaje:'No existen suscripciones',exito:0});
+                }
+            }
+    
+            console.log("Close Connection");
+            conectBD.end();
+    });
+};
+
+exports.suscribirCategoria = async (req,res)=>{
+
+    const {clienteId,categoriaId} = req.body; 
+
+    const conectBD = MySQLBD.conectar();
+
+    conectBD.query(`SELECT * FROM Suscripciones WHERE clienteId = ${clienteId} AND categoriaId = ${categoriaId}`, (err, SuscritoRes) => {
+       
+        if(err){  res.send({mensaje:'Error al suscribirse a la categoria',exito:0});
+                console.log("Close Connection");
+                conectBD.end();}
+        else{
+           
+            if(SuscritoRes.length && SuscritoRes[0].estado)
+            {
+                
+                res.send({mensaje:'Ya se encuentra suscrito a esta categoria',exito:0});
+                console.log("Close Connection");
+                conectBD.end();
+            }
+            
+            else{
+            let query =`INSERT INTO Suscripciones(clienteId,categoriaId) VALUES (${clienteId},${categoriaId});`;
+
+            if(SuscritoRes.length){
+                
+                query=`UPDATE Suscripciones SET estado = TRUE  WHERE clienteId =${clienteId} AND categoriaId = ${categoriaId}`;
+            }
+      
+            conectBD.query(query, (err, SuscripcionRes) => {
+
+                if(err){
+                res.send({mensaje:'Error al suscribirse a la categoria',exito:0});
+                }else{
+                    res.send({mensaje:'Se ha suscrito a la categoria',exito:1});
+                }
+        
+                console.log("Close Connection");
+                conectBD.end();
+            });
+
+        }}
+
+    });
+
+    
+};
+
+exports.cancelarSuscripcion = async (req,res)=>{
+
+    const conectBD = MySQLBD.conectar();
+    const {clienteId,categoriaId} = req.body; 
+
+     conectBD.query(`SELECT * FROM Suscripciones WHERE clienteId = ${clienteId} AND categoriaId = ${categoriaId} AND estado = TRUE `, (err, SuscritoRes) => {
+       
+        if(err){  res.send({mensaje:'Error al cancelar suscripcion',exito:0});
+                console.log("Close Connection");
+                conectBD.end();}
+        else{
+
+            if(SuscritoRes.length){
+                
+                conectBD.query(`UPDATE Suscripciones SET estado = FALSE  WHERE clienteId =${clienteId} AND categoriaId = ${categoriaId} `, (err, SuscripcionRes) => {
+
+                    if(err){
+                    res.send({mensaje:'Error al cancelar suscripcion ',exito:0});
+                    }else{
+                        res.send({mensaje:'Suscripcion cancelada',exito:1});
+                    }
+            
+                    console.log("Close Connection");
+                    conectBD.end();
+                });
+               
+            }else
+            {
+                res.send({mensaje:'No existe la suscripcion',exito:0});
+                console.log("Close Connection");
+                conectBD.end();  
+            }
+
+        }
+
+    });
+};
+
 exports.verificarTiempoToken = async(req, res) => {
     const {token} = req.body
     const data = getTokenData(token);

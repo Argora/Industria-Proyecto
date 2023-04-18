@@ -18,31 +18,25 @@ export class NavbarComponent implements OnInit {
     private usuarioServicio : UsuarioService) { }
 
   ngOnInit(): void {
-    this.inicializarParametros();
     this.pruebaSesion();
   }
 
-  inicializarParametros(){
-    this.sesion = false;
-    this.admin = false;
-    this.user = false;
-    console.log('llamado')
-  }
+
 
   pruebaSesion(){
     this.usuarioServicio.postToken({token:localStorage.getItem('token')}).subscribe(data => {
       //console.log(localStorage.getItem('token'))
       if (data.exito) {
-        console.log(data);
+        //console.log(data.mensaje);
         if(data.data.data.id){
-          console.log('usuario reconocido')
+          //console.log('usuario reconocido')
           this.sesion = true;
           if(data.data.data.tipoUsuario==1){
-            console.log('usuario normal')
+            //console.log('usuario normal')
             this.admin = false;
             this.user = true;
           }else{
-            console.log('usuario admin');
+            //console.log('usuario admin');
             this.admin = true;
             this.user = false;
           }

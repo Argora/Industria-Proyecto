@@ -36,5 +36,25 @@ export class UsuarioService {
     return this.http.post(this.url+'/token',req_body);
   };
 
+  getPerfilUsuario(id: number):Observable<any> {
+
+    return this.http.get(this.url+`/perfilUsuario/${id}`);
+  };
+
+  getSubscripciones(id: number):Observable<any> {
+
+    return this.http.get(this.url+`/suscripciones/${id}`);
+  };
+
+  postInscribirCategoria( req_body : any ):Observable<any> {
+
+    return this.http.post(this.url+'/suscribirCategoria',req_body);
+  };
+
+  postcancelarSuscripcion( req_body : any ):Observable<any> {
+
+    return this.http.post(this.url+'/cancelarSuscripcion',req_body);
+  };
+
 
 }
