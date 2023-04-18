@@ -18,7 +18,15 @@ export class NavbarComponent implements OnInit {
     private usuarioServicio : UsuarioService) { }
 
   ngOnInit(): void {
+    this.inicializarParametros();
     this.pruebaSesion();
+  }
+
+  inicializarParametros(){
+    this.sesion = false;
+    this.admin = false;
+    this.user = false;
+    console.log('llamado')
   }
 
   pruebaSesion(){
@@ -49,7 +57,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logOut() {
-    localStorage.removeItem('token');
+    localStorage.clear();
     this.router.navigate(['login']);
   }
 

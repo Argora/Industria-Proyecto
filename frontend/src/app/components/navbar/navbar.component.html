@@ -30,6 +30,9 @@
                 </div>
             </div>
           </li>
+          <li class="user nav-item" *ngIf="!sesion">
+            <i class="fa-solid fa-right-to-bracket fa-xl" style="color: #9a6b5b;" [routerLink]="['login']"></i>
+          </li>
         </ul>
       </div>
     </div>
