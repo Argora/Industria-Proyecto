@@ -26,4 +26,9 @@ export class UsuarioService {
     return this.http.post(this.url+'/confirmarUsuario',req_body);
   };
 
+  postLogIn( req_body : any ):Observable<any> {
+
+    return this.http.post(this.url+'/logIn',req_body);
+  };
+
 }

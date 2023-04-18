@@ -8,6 +8,13 @@ const getTokenEmail = (email) =>{
         {expiresIn:'1h'});
 };
 
+const getTokenLogIn = (user) =>{
+    return jwt.sign(
+        {data:user},
+        process.env.JWT_SECRET,
+        {expiresIn:'10m'});
+}
+
 const getTokenData = (token) =>{
     let data = null;
     jwt.verify(token,process.env.JWT_SECRET,(err,decoded)=>{
@@ -15,7 +22,6 @@ const getTokenData = (token) =>{
             console.log('Error al optener data del token');
         }else{
             data = decoded;
-        
         }
     });
 
@@ -24,5 +30,6 @@ const getTokenData = (token) =>{
 
 module.exports = {
     getTokenEmail,
-    getTokenData
+    getTokenData,
+    getTokenLogIn
 };

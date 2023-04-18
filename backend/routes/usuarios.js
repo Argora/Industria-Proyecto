@@ -7,5 +7,6 @@ const usuariosController = require('../controller/usuariosController');
 router.get('/datosMunicipios', usuariosController.getDeptosMunicipios);
 router.post('/registro', usuariosController.registrarUsuario);
 router.post('/confirmarUsuario', usuariosController.confirmarUsuario);
+router.post('/logIn', usuariosController.LoginUsuario);
 
 module.exports = router
