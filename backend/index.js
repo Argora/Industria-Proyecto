@@ -25,13 +25,13 @@ app.use('/api/usuarios', require('./routes/usuarios'));
 //SETTINGS
 
 const port = process.env.PORT || 3000;
-https.createServer({
+/*https.createServer({
     cert: fs.readFileSync('/etc/letsencrypt/live/hondumarket-info.store/fullchain.pem'),
     key: fs.readFileSync('/etc/letsencrypt/live/hondumarket-info.store/privkey.pem')
 }, app).listen(port, function(){
     console.log('servidor https iniciado');
-});
+});*/
 
-// http.listen(port,()=>{
-//     console.log("Servidor iniciado");
-// });
+http.listen(port,()=>{
+     console.log("Servidor iniciado");
+});
