@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class UsuarioService {
 
-  url = 'http://localhost:3000/api/usuarios'
+  url = 'https://hondumarket-info.store:3000/api/usuarios'
 
   constructor(private http:HttpClient) { }
 
