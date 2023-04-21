@@ -19,7 +19,7 @@
           <li class="nav-item" *ngIf="user">
             <a class="nav-link" aria-current="page" [routerLink]="['favoritos']">Favoritos</a>
           </li>
-          <li class="user nav-item" *ngIf="user">
+          <li class="user nav-item" *ngIf="sesion">
             <div ngbDropdown class="d-inline-block">
                 <button type="button" class="btn nav-link" id="dropdownBasic1" ngbDropdownToggle>
                     Usuario

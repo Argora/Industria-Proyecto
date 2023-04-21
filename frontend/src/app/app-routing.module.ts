@@ -9,6 +9,7 @@ import { RegistroComponent } from './components/registro/registro.component';
 import { ConfirmarCuentaComponent } from './components/confirmar-cuenta/confirmar-cuenta.component';
 import { HomeComponent } from './components/home/home.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
+import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 
 const routes: Routes = [
   { path: 'inicio', component: HomeComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'productos/detalles/:id', component: DetallesProductoComponent },
   { path: 'productos/misProductos', component: MisProductosComponent },
   { path: 'productos/registrar', component: RegistrarProductoComponent },
+  { path: 'adminHome', component: AdminHomeComponent },
   { path:'**', pathMatch:'full', redirectTo:'inicio' }
 ];
 

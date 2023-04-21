@@ -52,14 +52,14 @@ export class LoginComponent implements OnInit {
       
         if(data.acceso){
           localStorage.setItem('token', data.token);
-          console.log(data.mensaje);
+          console.log(data);
           if(parseInt(data.usuario.TipoUsuario)==1){
             this.router.navigate(['productos']);
           }
           //enviar a pagina de admin si el tipo de usuario es admin
-          /*else if(parseInt(localStorage.getItem('tipo'))==2){
-            this.router.navigate(['adminProductos']);
-          }*/
+          else if(parseInt(data.usuario.TipoUsuario)==2){
+            this.router.navigate(['adminHome']);
+          }
         }else{
           //console.log(data.acceso);
           Swal.fire(

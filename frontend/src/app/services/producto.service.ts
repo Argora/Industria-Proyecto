@@ -7,7 +7,9 @@ import { Observable } from 'rxjs';
 })
 export class ProductoService {
 
-  url = 'https://hondumarket-info.store:3000/api/productos'
+  //url = 'https://hondumarket-info.store:3000/api/productos'
+  //URL LOCAL
+  url = 'http://localhost:3000/api/productos'
 
   constructor(private http:HttpClient) { }
 
@@ -36,9 +38,9 @@ export class ProductoService {
     return this.http.get(this.url+`/getProductosUsuario/${id}`);
   };
 
-  inhabilitarProducto(id: number):Observable<any> {
+  eliminarProducto(id: number):Observable<any> {
 
-    return this.http.get(this.url+`/inhabilitarProducto/${id}`);
+    return this.http.delete(this.url+`/borrarProducto/${id}`);
   };
 
 }

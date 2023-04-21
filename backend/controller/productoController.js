@@ -198,9 +198,10 @@ exports.getProductosUsuario = async (req,res) =>{
 
 };
 
-exports.inhabilitarProducto = async (req,res) =>{
+exports.borrarProducto = async (req,res) =>{
 
     const productoId = req.params.id;
+    
 
     const conectBD = MySQLBD.conectar();
 
@@ -212,23 +213,34 @@ exports.inhabilitarProducto = async (req,res) =>{
             conectBD.end(); 
         }else{
             if(ProductoRes.length){
-                conectBD.query(`  UPDATE Productos SET estadoHabilitacion = FALSE  WHERE Id =  ${productoId} `, (err,  ProductoRes) => {
-                    
-                    if(err){res.send({mensaje:'Error al inhabilitarProducto',exito:0});}
-                    else{
-                    res.send({mensaje:'Producto dado de baja',exito:1})
-                     
-                }
-
-                });
+                
+                conectBD.query(`DELETE FROM ImagenesProducto WHERE productoId = ${productoId}`, (err, ImagenRes) => {
+        
+                    if(err){
+                        res.send({mensaje:'Error al borrar imagenes del producto',exito:0});
+                        console.log("Close Connection");
+                        conectBD.end(); 
+                    }else{
+                        conectBD.query(`DELETE FROM Productos WHERE Id = ${productoId}`, (err,  ProductoRes) => {
+                            if(err){
+                                res.send({mensaje:'Error al borrarProducto',exito:0});
+                                console.log("Close Connection");
+                                conectBD.end(); 
+                            }
+                            else{
+                                res.send({mensaje:'Producto eliminado',exito:1})
+                                console.log("Close Connection");
+                                conectBD.end();    
+                            }
+                        });
+                    }
+                });    
             }else{
-            res.send({mensaje:'No existe el producto',exito:0})  
+                res.send({mensaje:'No existe el producto',exito:0})
+                console.log("Close Connection");
+                conectBD.end();   
             }
-            console.log("Close Connection");
-            conectBD.end(); 
         }
-       
-      
     });
 
 };

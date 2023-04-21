@@ -19,6 +19,7 @@ import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     ConfirmarCuentaComponent,
     HomeComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    AdminHomeComponent
   ],
   imports: [
     BrowserModule,

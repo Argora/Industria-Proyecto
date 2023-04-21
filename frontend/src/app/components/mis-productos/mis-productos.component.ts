@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Buffer } from 'buffer';
 import { ProductoService } from 'src/app/services/producto.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import Swal from 'sweetalert2';
@@ -21,7 +22,6 @@ export class MisProductosComponent implements OnInit {
 
   ngOnInit(): void {
     this.pruebaToken();
-    this.getProductosUsuario();
   }
 
   getProductosUsuario(){
@@ -53,7 +53,7 @@ export class MisProductosComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         console.log('Inhabilitando producto: '+producto.Id);
-        this.productoServicio.inhabilitarProducto(producto.Id).subscribe(data => {
+        this.productoServicio.eliminarProducto(producto.Id).subscribe(data => {
 
           if (data.exito) {
             console.log(data.mensaje);
@@ -89,6 +89,7 @@ export class MisProductosComponent implements OnInit {
       if (data.exito) {
         console.log(data.mensaje);
         this.idUsuario = data.data.data.id;
+        this.getProductosUsuario();
       }
       else {
         console.log(data.mensaje);
