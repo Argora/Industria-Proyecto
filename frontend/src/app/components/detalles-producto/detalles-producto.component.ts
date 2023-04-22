@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Buffer } from 'buffer';
 import { ProductoService } from 'src/app/services/producto.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { NuevoChatService } from 'src/app/services/nuevo-chat.service';
 
 @Component({
   selector: 'app-detalles-producto',
@@ -24,7 +25,8 @@ export class DetallesProductoComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private productoServicio : ProductoService,
-    private usuarioServicio : UsuarioService
+    private usuarioServicio : UsuarioService,
+    private nuevoChat : NuevoChatService
     ) { }
 
   ngOnInit(): void {
@@ -65,6 +67,11 @@ export class DetallesProductoComponent implements OnInit {
       },
       (err) => console.log(err)
     );
+  }
+
+  iniciarChat(chatPersona: string, chatPersonaId: number){
+    this.nuevoChat.addNewChat(chatPersona,chatPersonaId);
+    this.router.navigate(['chat']);
   }
 
   convertirImagenes() {

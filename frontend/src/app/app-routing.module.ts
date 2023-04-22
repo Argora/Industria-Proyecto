@@ -10,6 +10,7 @@ import { ConfirmarCuentaComponent } from './components/confirmar-cuenta/confirma
 import { HomeComponent } from './components/home/home.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 const routes: Routes = [
   { path: 'inicio', component: HomeComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'productos/detalles/:id', component: DetallesProductoComponent },
   { path: 'productos/misProductos', component: MisProductosComponent },
   { path: 'productos/registrar', component: RegistrarProductoComponent },
+  { path: 'chat', component: ChatComponent },
   { path: 'adminHome', component: AdminHomeComponent },
   { path:'**', pathMatch:'full', redirectTo:'inicio' }
 ];

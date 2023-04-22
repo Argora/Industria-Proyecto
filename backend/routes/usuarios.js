@@ -10,6 +10,7 @@ router.post('/confirmarUsuario', usuariosController.confirmarUsuario);
 router.post('/logIn', usuariosController.LoginUsuario);
 router.post('/token', usuariosController.verificarTiempoToken);
 router.get('/perfilUsuario/:id', usuariosController.perfilUsuario);
+router.get('/detallesVendedor/:id', usuariosController.detallesVendedor);
 router.get('/suscripciones/:id', usuariosController.suscripcionesCliente);
 router.post('/cancelarSuscripcion', usuariosController.cancelarSuscripcion);
 router.post('/suscribirCategoria', usuariosController.suscribirCategoria);

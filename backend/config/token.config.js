@@ -12,7 +12,7 @@ const getTokenLogIn = (user) =>{
     return jwt.sign(
         {data:user},
         process.env.JWT_SECRET,
-        {expiresIn:'15m'});
+        {expiresIn:'30m'});
 }
 
 const getTokenData = (token) =>{

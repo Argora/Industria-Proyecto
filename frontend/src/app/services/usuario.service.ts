@@ -43,6 +43,11 @@ export class UsuarioService {
     return this.http.get(this.url+`/perfilUsuario/${id}`);
   };
 
+  getDetallesVendedor(id: number):Observable<any> {
+
+    return this.http.get(this.url+`/detallesVendedor/${id}`);
+  };
+
   getSubscripciones(id: number):Observable<any> {
 
     return this.http.get(this.url+`/suscripciones/${id}`);
