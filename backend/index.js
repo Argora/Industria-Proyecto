@@ -28,6 +28,7 @@ app.use(bodyParser.urlencoded({extended : false}));
 app.use('/api/productos',require('./routes/productos'));
 app.use('/api/usuarios', require('./routes/usuarios'));
 app.use('/api/chat', require('./routes/chat'));
+app.use('/api/notisPush',require('./routes/notificaciones'));
 
 
 //SOCKET.IO
