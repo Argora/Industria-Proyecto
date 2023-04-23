@@ -92,6 +92,22 @@
             <textarea class="form-control" id="direccion" formControlName="direccion" rows="2"
                 placeholder="Dirección exacta"></textarea>
         </div>
+
+        <div class="col-md-2">
+            <label for="direccion" class="form-label">Suscripción</label>
+        </div>        
+
+        <div class="col-md-4">
+            <select class="form-select" id="Suscripcion" formControlName="Suscripcion">
+                <option selected >1 año</option>
+
+                <option>2 años</option>
+
+                <option>3 años</option>
+            </select>
+            <small class="form-text text-muted">*Por favor necesitamos que permita las notificaciones</small>
+            <input class="form-check-input" style="margin-left: 5px;" type="checkbox" value="" id="notificacion" (click)="subscribeToNotifications()">
+        </div>
     </div>
 
     <div class="col-12 mb-4">

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { correoValido, passValido, passwordMatchValidator } from './registro.helper';
 import Swal from 'sweetalert2';
+import { SwPush } from '@angular/service-worker';
 
 @Component({
   selector: 'app-registro',
@@ -14,30 +15,44 @@ export class RegistroComponent implements OnInit {
 
   registroForm: FormGroup;
   usuario = {};
+  endpoint = '';
+
+  public readonly VAPID_PUBLIC_KEY:string = 'BMyCzy-snI3LlMzPmVl5fjtlBibF_fmaQFA0jHGlmcARDnscvPtjNa23YdqvyJuu0ujbnsNaXYKlyUqBQlUUE20';
 
   constructor(private router: Router,
-    private usuarioServicio : UsuarioService) { }
+    private usuarioServicio: UsuarioService,
+    private swPush: SwPush) { }
 
   ngOnInit(): void {
     this.getDatosRegistro();
     this.crearRegistroForm();
   }
 
-//Obteniendo datos de registro
-departamentos=[];
-municipios=[];
+  //Obteniendo datos de registro
+  departamentos = [];
+  municipios = [];
+
+  subscribeToNotifications(): any {
+    this.swPush.requestSubscription({
+      serverPublicKey: this.VAPID_PUBLIC_KEY
+    }).then(sub => {
+      const token = JSON.parse(JSON.stringify(sub));
+      console.log('***ojo***', token);
+      this.endpoint = token.endpoint;
+    }).catch(err => console.error('error en ', err));
+  }
 
   getDatosRegistro() {
 
     this.usuarioServicio.getDatosMunicipios().subscribe(data => {
-   
+
       this.departamentos = data.departamentos;
       this.municipios = data.municipios;
 
     }, err => console.log(err));
   }
 
-  crearRegistroForm(): void{
+  crearRegistroForm(): void {
     this.registroForm = new FormGroup({
       nombre: new FormControl("", Validators.required),
       apellido: new FormControl("", Validators.required),
@@ -48,11 +63,12 @@ municipios=[];
       telefono: new FormControl("", Validators.required),
       direccion: new FormControl("", Validators.required),
       passw2: new FormControl("", Validators.required),
-      termino: new FormControl(false, Validators.requiredTrue)
+      termino: new FormControl(false, Validators.requiredTrue),
+      suscripcion: new FormControl("", Validators.required)
     }, passwordMatchValidator)
   }
 
-  get filtrarMunicipios(){
+  get filtrarMunicipios() {
 
     var municipio = this.municipios.filter(e => {
       return e.departamentoId == this.registroForm.get('departamento').value;
@@ -61,12 +77,12 @@ municipios=[];
     return municipio;
   }
 
-  aceptarTerminos(){
+  aceptarTerminos() {
     console.log('terminos aceptados');
     this.registroForm.get('termino').setValue(true);
   }
 
-  registrarUsuario(){
+  registrarUsuario() {
     var usuario = this.registroForm.value;
 
     this.usuario = {
@@ -77,15 +93,16 @@ municipios=[];
       municipio: usuario.municipio,
       departamento: usuario.departamento,
       telefono: usuario.telefono,
-      direccion: usuario.direccion
-
+      direccion: usuario.direccion,
+      suscripcion: usuario.suscripcion,
+      endpoint: this.endpoint
     };
 
     if (this.registroForm.valid && this.validarCorreo && this.validarPass) {
 
       this.usuarioServicio.postRegistrarUsuario(this.usuario).subscribe(result => {
-  
-        if(result.guardado){
+
+        if (result.guardado) {
 
           //console.log(result.mensaje);
           Swal.fire({
@@ -100,7 +117,7 @@ municipios=[];
             }
           });
 
-        }else{
+        } else {
           console.log(result.mensaje);
           this.router.navigate(['registro']);
           Swal.fire(
@@ -109,10 +126,10 @@ municipios=[];
             'warning',
           );
         }
-    
-  
+
+
       }, err => console.log(err));
-    }else{
+    } else {
       Swal.fire(
         'Error!',
         'Por favor completar el registro con todo los datos',
@@ -122,11 +139,11 @@ municipios=[];
   }
 
   //Validaciones
-  get validarCorreo(){
+  get validarCorreo() {
     return correoValido(this.registroForm.get('email').value);
   }
 
-  get validarPass(){
+  get validarPass() {
     return passValido(this.registroForm.get('passw').value);
   }
 
