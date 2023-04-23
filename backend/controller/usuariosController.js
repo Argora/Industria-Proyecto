@@ -359,6 +359,103 @@ exports.cancelarSuscripcion = async (req,res)=>{
     });
 };
 
+exports.agregarFavorito = async (req,res)=>{
+    const {clienteId,productoId} = req.body;
+
+    const conectBD = MySQLBD.conectar();
+    conectBD.query(`INSERT INTO ListaDeseos(clienteId,productoId) VALUES (${clienteId},${productoId})`, (err, FavoritoRes) => {
+        if(err){
+            res.send({mensaje:`Error al guardar deseo`,exito:0});
+            console.log("Close Connection");
+            conectBD.end();
+        }
+        else{
+
+            res.send({mensaje:`Deseo guardado`,exito:1});
+            console.log("Close Connection");
+            conectBD.end();
+        }
+
+    });
+
+}
+
+exports.eliminarFavorito = async (req,res)=>{
+
+    const {clienteId,productoId} = req.body;
+
+    const conectBD = MySQLBD.conectar();
+    conectBD.query(`DELETE FROM ListaDeseos WHERE clienteId = ${clienteId} AND productoId = ${productoId}`, (err, FavoritoRes) => {
+        if(err){
+            res.send({mensaje:`Error al eliminar deseo`,exito:0});
+            console.log("Close Connection");
+            conectBD.end();
+        }
+        else{
+
+            res.send({mensaje:`Deseo eliminado`,exito:1});
+            console.log("Close Connection");
+            conectBD.end();
+        }
+
+    });
+
+}
+
+exports.estadoFavorito = async (req,res)=>{
+
+    const {clienteId,productoId} = req.body;
+
+    const conectBD = MySQLBD.conectar();
+    conectBD.query(`SELECT * FROM ListaDeseos WHERE clienteId = ${clienteId} AND productoId = ${productoId}`, (err, FavoritoRes) => {
+        if(err){
+            res.send({mensaje:`Error al comprobar favoritos`,exito:0});
+        }
+        else if(FavoritoRes.length){
+            res.send({mensaje:`estado favorito encontrado`,deseo:FavoritoRes,exito:1});
+        }else{
+            res.send({mensaje:`No hay favoritos`,exito:0});
+        }
+
+        console.log("Close Connection");
+        conectBD.end();
+    });
+
+}
+
+exports.listaFavoritos = async (req,res)=>{
+
+    const clienteId = req.params.id;
+    const conectBD = MySQLBD.conectar();
+
+    conectBD.query(`SELECT p.*,i.productoImagen Imagen ,i.contentType ImagenTipo,CONCAT(u.nombre,' ',u.apellido) Usuario , c.nombre Categoria, c.Id CategoriaId,ld.Id Deseo FROM Productos p 
+    INNER JOIN ImagenesProducto i ON p.Id = i.productoId
+    INNER JOIN Categorias c ON c.Id = p.categoriaId
+    INNER JOIN Usuarios u ON u.Id = p.personaId
+    INNER JOIN ListaDeseos ld ON ld.productoId = p.Id
+    AND ld.clienteId= ${clienteId} 
+    AND p.estadoHabilitacion = TRUE
+    AND ld.estadoHabilitacion = TRUE
+    GROUP BY p.Id`, (err, ProductoRes) => {
+        
+        if(err){
+            res.send({mensaje:`Error al buscar productos `,exito:0});
+            console.log("Close Connection");
+            conectBD.end();
+        }else{
+            if(ProductoRes.length){
+            res.send({mensaje:'Productos encontrados',productos:ProductoRes,exito:1});
+            }else{
+            res.send({mensaje:'No hay Productos',exito:0})  
+            }
+        }
+       
+        console.log("Close Connection");
+        conectBD.end(); 
+    });
+
+}
+
 exports.verificarTiempoToken = async(req, res) => {
     const {token} = req.body
     const data = getTokenData(token);

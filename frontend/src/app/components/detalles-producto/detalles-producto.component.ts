@@ -21,6 +21,9 @@ export class DetallesProductoComponent implements OnInit {
     estrella5: new FormControl('5'),
   });
   id: number;
+  marcado = false;
+  userId : number;
+  user = false;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -57,7 +60,7 @@ export class DetallesProductoComponent implements OnInit {
     this.productoServicio.getProductoDetalle(id).subscribe(
       (data) => {
         if (data.exito) {
-          console.log(data);
+          console.log(data.mensaje);
           this.producto = data.producto[0];
           this.imagenesProducto = data.imagenes;
           this.convertirImagenes();
@@ -74,6 +77,50 @@ export class DetallesProductoComponent implements OnInit {
     this.router.navigate(['chat']);
   }
 
+  estadoFavorito(){
+    if(this.user){
+      let data = {
+        clienteId:this.userId,
+        productoId:this.id
+      }
+      this.usuarioServicio.postEstadoFavorito(data).subscribe(data=>{
+        if(data.exito){
+          this.marcado = true;
+          console.log(data.mensaje);
+        }else {
+          this.marcado = false;
+          console.log(data.mensaje);
+        }
+      }, err => console.log(err));
+    }
+  }
+
+  favorito(){
+    let data = {
+      clienteId:this.userId,
+      productoId:this.id
+    }
+    if(this.marcado==false){
+      this.marcado=true
+      this.usuarioServicio.postAgregarFavorito(data).subscribe(data=>{
+        if(data.exito){
+          console.log(data.mensaje);
+        }else {
+          console.log(data.mensaje);
+        }
+      }, err => console.log(err));
+    }else{
+      this.marcado=false
+      this.usuarioServicio.postEliminarFavorito(data).subscribe(data=>{
+        if(data.exito){
+          console.log(data.mensaje);
+        }else {
+          console.log(data.mensaje);
+        }
+      }, err => console.log(err));
+    }
+  }
+
   convertirImagenes() {
     this.imagenesProducto.forEach((imagen) => {
       let buff = new Buffer(imagen.Imagen);
@@ -88,6 +135,10 @@ export class DetallesProductoComponent implements OnInit {
       //console.log(localStorage.getItem('token'))
       if (data.exito) {
         console.log(data.mensaje);
+        this.userId = data.data.data.id;
+        this.user = true;
+        //console.log(this.user)
+        this.estadoFavorito();
       }
       else {
         console.log(data.mensaje);

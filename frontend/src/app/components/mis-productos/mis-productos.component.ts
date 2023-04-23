@@ -31,7 +31,7 @@ export class MisProductosComponent implements OnInit {
         console.log(data.mensaje);
         this.allProductos = data.productos;
         this.convertirImagenes();
-        console.log(this.allProductos);
+        //console.log(this.allProductos);
       }
       else {
         console.log(data.mensaje);
