@@ -6,6 +6,7 @@ const multer = require("../config/multer.config.js");
 
 //api/productos
 router.get('/getAll', productoController.getProductos);
+router.get('/getProductosCategoria/:id' , productoController.getProductosCategoria)
 router.get('/detalles/:id', productoController.getProductoDetalle)
 router.post('/nuevoProducto/:id',multer.cargarArchivo.array('imagenesProducto',4),productoController.nuevoProducto);
 router.get('/datosregistroProducto',productoController.getAll_categorias);

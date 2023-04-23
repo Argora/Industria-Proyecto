@@ -28,6 +28,11 @@ export class ProductoService {
     return this.http.get(this.url+'/getAll');
   };
 
+  getProductosCategoria(id: number):Observable<any> {
+
+    return this.http.get(this.url+`/getProductosCategoria/${id}`);
+  };
+
   getProductoDetalle(id: number):Observable<any> {
 
     return this.http.get(this.url+`/detalles/${id}`);

@@ -435,7 +435,6 @@ exports.listaFavoritos = async (req,res)=>{
     INNER JOIN ListaDeseos ld ON ld.productoId = p.Id
     AND ld.clienteId= ${clienteId} 
     AND p.estadoHabilitacion = TRUE
-    AND ld.estadoHabilitacion = TRUE
     GROUP BY p.Id`, (err, ProductoRes) => {
         
         if(err){

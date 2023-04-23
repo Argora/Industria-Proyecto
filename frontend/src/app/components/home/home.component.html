@@ -2,12 +2,31 @@
 <div class="container-fluid">
     <div class="row" >
         <div class="col-12 col-sm-6">
-           <img src="assets/logo.png" alt="">
+           <img src="assets/logo.png" style="width:fit-content; height:fit-content" alt="">
             <h2>¡La mejor página web para vender tus Productos!</h2>
         </div>
         <div class="col-12 col-sm-6">
             <img id="imagenI" src="assets/imagen.jpeg" class="w-75 p-3" alt="">
         </div>
-    
+        <ngb-carousel class="carousel mt-5">
+            <ng-template ngbSlide>
+                <div class="picsum-img-wrapper">
+                    <img src="assets/imgcarru2.png" class="d-block w-100 h-100"/>
+                </div>
+                <div class="carousel-caption">
+                    <h3>¡Vende tus Productos!</h3>
+                    <p>Publica tus productos para vender</p>
+                </div>
+            </ng-template>
+            <ng-template ngbSlide>
+                <div class="picsum-img-wrapper">
+                    <img src="assets/imgcarru.jpg" class="d-block w-100 h-100"/>
+                </div>
+                <div class="carousel-caption">
+                    <h3>¡Compra lo que Necesitas!</h3>
+                    <p>Revisa nuestros productos y ponte en contacto para Adquirirlos</p>
+                </div>
+            </ng-template>
+        </ngb-carousel>
     </div>
 </div>

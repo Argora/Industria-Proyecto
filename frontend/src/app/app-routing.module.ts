@@ -11,6 +11,8 @@ import { HomeComponent } from './components/home/home.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { FavoritosComponent } from './components/favoritos/favoritos.component';
+import { ComprarPremiumComponent } from './components/comprar-premium/comprar-premium.component';
 
 const routes: Routes = [
   { path: 'inicio', component: HomeComponent },
@@ -23,6 +25,8 @@ const routes: Routes = [
   { path: 'productos/misProductos', component: MisProductosComponent },
   { path: 'productos/registrar', component: RegistrarProductoComponent },
   { path: 'chat', component: ChatComponent },
+  { path: 'favoritos', component: FavoritosComponent },
+  { path: 'premium', component: ComprarPremiumComponent },
   { path: 'adminHome', component: AdminHomeComponent },
   { path:'**', pathMatch:'full', redirectTo:'inicio' }
 ];

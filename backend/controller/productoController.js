@@ -89,7 +89,7 @@ exports.getAll_categorias = async (req, res) => {
         }else{
          
 
-                res.send({mensaje:'Categorias optenidas',categorias:CategoriasRes,exito:1});
+                res.send({mensaje:'Categorias obtenidas',categorias:CategoriasRes,exito:1});
 
             console.log("Close Connection");
             conectBD.end();
@@ -114,6 +114,35 @@ exports.getProductos = async (req,res) =>{
     else{res.send({mensaje:'Productos encontrados',productos:ProductoRes,exito:1}) }
 
  
+        console.log("Close Connection");
+        conectBD.end(); 
+    });
+
+};
+
+exports.getProductosCategoria = async (req,res) =>{
+
+    const categoriaId = req.params.id;
+
+    const conectBD = MySQLBD.conectar();
+
+    conectBD.query(`SELECT p.*,i.productoImagen Imagen ,i.contentType ImagenTipo,CONCAT(u.nombre,' ',u.apellido) Usuario , c.nombre Categoria, c.Id CategoriaId FROM Productos p 
+    INNER JOIN ImagenesProducto i ON p.Id = i.productoId
+    INNER JOIN Categorias c ON c.Id = p.categoriaId
+    INNER JOIN Usuarios u ON u.Id = p.personaId  
+    AND p.categoriaId = ${categoriaId} AND p.estadoHabilitacion = TRUE
+    GROUP BY p.Id`, (err, ProductoRes) => {
+        
+        if(err){
+            res.send({mensaje:`Error al buscar productos ${categoriaId}`,exito:0})
+        }else{
+            if(ProductoRes.length){
+            res.send({mensaje:'Productos encontrados',productos:ProductoRes,categoria:{id:ProductoRes[0].CategoriaId,nombre:ProductoRes[0].Categoria},exito:1})
+            }else{
+            res.send({mensaje:'No hay Productos en esta categoria',exito:0})  
+            }
+        }
+       
         console.log("Close Connection");
         conectBD.end(); 
     });

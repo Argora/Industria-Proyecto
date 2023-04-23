@@ -21,6 +21,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 import { FavoritosComponent } from './components/favoritos/favoritos.component';
+import { ComprarPremiumComponent } from './components/comprar-premium/comprar-premium.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { FavoritosComponent } from './components/favoritos/favoritos.component';
     NavbarComponent,
     FooterComponent,
     AdminHomeComponent,
-    FavoritosComponent
+    FavoritosComponent,
+    ComprarPremiumComponent
   ],
   imports: [
     BrowserModule,

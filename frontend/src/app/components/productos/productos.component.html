@@ -1,14 +1,12 @@
 <h1 class="text-center">Productos</h1>
-<div class="arriba mt-5">
+<div class="arriba mt-5" [formGroup]="formulario">
     <p class="titulo">Elija la Categoría de su preferencia</p>
     <div class="col-md-4">
-        <select class="form-select" id="categorias">
-            <option selected disabled value="">Elegir...</option>
-            <option value="0">Todas</option>
-        </select>
-    </div>
-    <div>
-      <buttom class="btn btn-primary" routerLink=registrar>Registrar producto</buttom>
+      <select class="form-select" id="categorias" formControlName="categorias" (change)="cargarProductos()">
+        <option selected disabled value="">Elegir...</option>
+        <option value="0">Todas</option>
+        <option *ngFor="let ctg of allCategorias" [ngValue]="ctg.Id">{{ctg.nombre}}</option>
+      </select>
     </div>
 </div>
 
