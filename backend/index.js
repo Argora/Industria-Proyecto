@@ -29,6 +29,7 @@ app.use('/api/productos',require('./routes/productos'));
 app.use('/api/usuarios', require('./routes/usuarios'));
 app.use('/api/chat', require('./routes/chat'));
 app.use('/api/notisPush',require('./routes/notificaciones'));
+app.use('/api/admin', require('./routes/admin'));
 
 
 //SOCKET.IO
