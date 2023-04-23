@@ -28,6 +28,11 @@ app.use(bodyParser.urlencoded({extended : false}));
 app.use('/api/productos',require('./routes/productos'));
 app.use('/api/usuarios', require('./routes/usuarios'));
 app.use('/api/chat', require('./routes/chat'));
+<<<<<<< Updated upstream
+=======
+app.use('/api/admin', require('./routes/admin'));
+app.use('/api/notisPush',require('./routes/notificaciones'));
+>>>>>>> Stashed changes
 
 
 //SOCKET.IO
