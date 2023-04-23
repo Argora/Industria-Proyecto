@@ -48,6 +48,9 @@ export class UsuarioService {
     return this.http.get(this.url+`/detallesVendedor/${id}`);
   };
 
+
+  //Categorias
+
   getSubscripciones(id: number):Observable<any> {
 
     return this.http.get(this.url+`/suscripciones/${id}`);
@@ -61,6 +64,29 @@ export class UsuarioService {
   postcancelarSuscripcion( req_body : any ):Observable<any> {
 
     return this.http.post(this.url+'/cancelarSuscripcion',req_body);
+  };
+
+
+  //Favoritos
+
+  postAgregarFavorito( req_body : any ):Observable<any> {
+    
+    return this.http.post(this.url+'/agregarFavorito',req_body);
+  }
+
+  postEliminarFavorito( req_body : any ):Observable<any> {
+    
+    return this.http.post(this.url+'/eliminarFavorito',req_body);
+  }
+
+  postEstadoFavorito( req_body : any ):Observable<any> {
+    
+    return this.http.post(this.url+'/estadoFavorito',req_body);
+  }
+
+  getFavoritos(id: number):Observable<any> {
+
+    return this.http.get(this.url+`/listaFavoritos/${id}`);
   };
 
 
