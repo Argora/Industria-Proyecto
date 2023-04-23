@@ -32,15 +32,11 @@ export class LoginComponent implements OnInit {
   }
 
   logIn() {
-
     var usuario = this.loginForm.value;
-
     this.datos = {
       email: usuario.email,
       contrasenia: usuario.passw
     };
-
-
     if(!this.validar){
       Swal.fire(
         'Error!',

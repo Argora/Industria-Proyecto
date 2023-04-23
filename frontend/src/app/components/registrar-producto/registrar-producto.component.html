@@ -39,7 +39,7 @@
     <div class="col-md-8">
             <ngx-dropzone (change)="onSelect($event)" accept="image/*">
                 <ngx-dropzone-label>
-                        <a type="button" class="btn btn-secondary">Selecciona una Imagen <br> o Arrastra y suelta las imagenes </a>
+                        <a type="button" class="btn btn-secondary">Selecciona una Imagen <br> o Arrastra y suelta las imagenes <br> (máximo 4)</a>
                 </ngx-dropzone-label>
                 <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
                     <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>

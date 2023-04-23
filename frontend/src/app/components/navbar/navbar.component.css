@@ -32,6 +32,14 @@
     color: #9a6b5b;
     
 }
+
+.toggleMenu{
+    color: #9a6b5b;
+}
+
+.dropDownMenu{
+    background-color:#ebe8e5;
+}
 .nav-link :active{
     color: #9a6b5b;
 }

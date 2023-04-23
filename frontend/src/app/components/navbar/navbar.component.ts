@@ -13,12 +13,22 @@ export class NavbarComponent implements OnInit {
   admin = false;
   user = false;
 
+  isMenuCollapsed = true;
+
   constructor(
     private router : Router,
     private usuarioServicio : UsuarioService) { }
 
   ngOnInit(): void {
+    //conprobar usuario al cargar navbar por primera vez
     this.pruebaSesion();
+    //comprobar usuario cuando se haga un cambio en la url
+    this.router.events.subscribe((data:any)=>{
+      if(data.url){
+        //console.log('actualizando navbar');
+        this.pruebaSesion();
+      }
+    });
   }
 
 
@@ -43,8 +53,10 @@ export class NavbarComponent implements OnInit {
         }
       }
       else {
-        console.log(data.mensaje);
+        //console.log(data.mensaje);
         this.sesion = false;
+        this.user = false;
+        this.admin = false;
         localStorage.clear();
       }
     })

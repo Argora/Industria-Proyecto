@@ -13,6 +13,9 @@ import { AdminHomeComponent } from './components/admin-home/admin-home.component
 import { ChatComponent } from './components/chat/chat.component';
 import { FavoritosComponent } from './components/favoritos/favoritos.component';
 import { ComprarPremiumComponent } from './components/comprar-premium/comprar-premium.component';
+import { AdminProductosComponent } from './components/admin-productos/admin-productos.component';
+import { AdminUsuariosComponent } from './components/admin-usuarios/admin-usuarios.component';
+import { BitacoraComponent } from './components/bitacora/bitacora.component';
 
 const routes: Routes = [
   { path: 'inicio', component: HomeComponent },
@@ -28,6 +31,9 @@ const routes: Routes = [
   { path: 'favoritos', component: FavoritosComponent },
   { path: 'premium', component: ComprarPremiumComponent },
   { path: 'adminHome', component: AdminHomeComponent },
+  { path: 'adminProductos', component: AdminProductosComponent },
+  { path: 'adminUsuarios', component: AdminUsuariosComponent },
+  { path: 'bitacora', component: BitacoraComponent },
   { path:'**', pathMatch:'full', redirectTo:'inicio' }
 ];
 

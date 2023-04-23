@@ -119,7 +119,6 @@ exports.confirmarUsuario = async (req, res) => {
         const email = data.data;
         //conexión a base de datos
         const conectBD = MySQLBD.conectar();
-        console.log('asdf')
         //Consultar usuario en base de datos
         conectBD.query(`SELECT * FROM Usuarios WHERE email = '${email}'`, (err, User) => {
            //Verificar si el usuario
