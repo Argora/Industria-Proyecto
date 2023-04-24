@@ -257,11 +257,10 @@ exports.suscripcionesCliente = async (req,res)=>{
 
     const clienteId = req.params.id;
 
+    console.log("Hola",req.params.id);
+
     const conectBD = MySQLBD.conectar();
-    conectBD.query(`SELECT c.nombre,s.* FROM Suscripciones s
-                    INNER JOIN Categorias c ON c.Id = s.categoriaId 
-                    AND s.clienteId = ${clienteId}
-                    AND s.estado = TRUE`, (err, SuscripcionRes) => {
+    conectBD.query(`SELECT * FROM Suscripciones WHERE clienteId = ${clienteId};`, (err, SuscripcionRes) => {
 
         if(err){
             res.send({mensaje:'Error al buscar suscripciones',exito:0});
