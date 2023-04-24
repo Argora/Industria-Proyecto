@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 //url local
-const url ='http://localhost:4200';
+const url ='https://hondumarket.store';
 //url AWS
 //const url = '';
 
