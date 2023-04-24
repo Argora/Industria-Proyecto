@@ -25,6 +25,7 @@ import { ComprarPremiumComponent } from './components/comprar-premium/comprar-pr
 import { AdminProductosComponent } from './components/admin-productos/admin-productos.component';
 import { AdminUsuariosComponent } from './components/admin-usuarios/admin-usuarios.component';
 import { BitacoraComponent } from './components/bitacora/bitacora.component';
+import { PaymentModalComponent } from './components/payment-modal/payment-modal.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { BitacoraComponent } from './components/bitacora/bitacora.component';
     ComprarPremiumComponent,
     AdminProductosComponent,
     AdminUsuariosComponent,
-    BitacoraComponent
+    BitacoraComponent,
+    PaymentModalComponent
   ],
   imports: [
     BrowserModule,

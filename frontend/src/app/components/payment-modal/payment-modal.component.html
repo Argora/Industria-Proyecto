@@ -1,0 +1,26 @@
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Datos de la tarjeta</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+    <div class="modal-body">
+        <!-- Aquí puedes agregar los campos para el pago con tarjeta -->
+        <div class="form-group">
+          <label for="card-number">Número de tarjeta</label>
+          <input type="text" class="form-control" id="card-number" name="card-number">
+        </div>
+        <div class="form-group">
+          <label for="card-expiry">Fecha de expiración</label>
+          <input type="text" class="form-control" id="card-expiry" name="card-expiry">
+        </div>
+        <div class="form-group">
+          <label for="card-cvc">CVC</label>
+          <input type="text" class="form-control" id="card-cvc" name="card-cvc">
+        </div>
+      </div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">pagar</button>
+	</div>
+</ng-template>
+
+<a class="btn btn-lg btn-outline-secondary" style="color: black; border-color: black;" (click)="open(content)">Pagar con tarjeta</a>
