@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const adminContriller = require('../controller/adminController');
+const adminController = require('../controller/adminController');
 
-router.get('/getProductosAdmin', adminContriller.getProductosAdmin);
-router.put('/actualizarProductoAdmin', adminContriller.actualizarProducto);
+router.get('/getProductosAdmin', adminController.getProductosAdmin);
+router.put('/actualizarProductoAdmin', adminController.actualizarProducto);
+router.get('/getUsuariosAdmin', adminController.getUsuarios);
+router.delete('/borrarUsuario/:id', adminController.borrarUsuario);
+router.post('/registrarUsuarioAdmin', adminController.registrarUsuarioAdmin)
+router.put('/actualizarUsuarioAdmin', adminController.actualizarUsuario);
 
 module.exports = router;

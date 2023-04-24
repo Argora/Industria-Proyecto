@@ -1,0 +1,233 @@
+<h1 class="text-center mt-5">Gestión de Usuarios</h1>
+<button (click)="open(registrar)">Registrar nuevo usuario</button>
+<div class="container mt-5">
+    <table class="table mt-5">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Municipio</th>
+                <th>Fecha registro</th>
+                <th>Tiempo de suscripción</th>
+                <th>Acciones</th>
+            </tr>  
+            <tbody>
+                <tr *ngFor="let user of AllUsuarios">
+                    <td class="id">{{user.Id}}</td>
+                    <td >{{user.nombre}}</td>
+                    <td >{{user.apellido}}</td>
+                    <td >{{user.email}}</td>
+                    <td >{{user.municipioId}}</td>
+                    <td >{{ user.creacion | date: 'shortDate' }}</td>
+                    <td>Ejemplo</td>
+                    <td>
+                        <i class="eliminar fa-solid fa-trash-can itemAdmin" (click)="eliminarUsuario(user)"></i>
+                        <i class="fa-solid fa-pen-to-square itemAdmin"  (click)="cargarUsuario(user); open(actualizar)"></i>
+                    </td>
+                </tr> 
+            </tbody>
+    </table>
+</div>
+
+<!--modal registrar usuario-->
+<ng-template #registrar let-modal class="modal-lg">
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Registrar Usuario</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+        <br>
+        <form class="row g-3" novalidate [formGroup]="registroForm" (ngSubmit)="registrarUsuario(); modal.close('Save click')">
+            <div class="mb-4 row">
+                <div class="col-md-2">
+                    <label for="nombre" class="col-sm-1 col-form-label">Nombre</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="nombre" formControlName="nombre" value="">
+                    <small *ngIf=""></small>
+                </div>
+                <div class="col-md-2">
+                    <label for="apellido" class="col-sm-1 col-form-label">Apellido</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="apellido" formControlName="apellido" value="">
+                </div>
+            </div>
+            <div class="mb-4 row">
+                <div class="col-md-2">
+                    <label for="correo" class="form-label">Correo</label>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="email" class="form-control" id="correo" formControlName="email"
+                            placeholder="usuario@server.com" aria-describedby="correo">
+                        <span class="input-group-text" id="correo" style="border: 1px solid black;">@</span>
+                    </div>
+                    <small *ngIf="!validarCorreo">Ingrese un correo correcto</small>
+                </div>
+                <div class="col-md-2">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="telefono" formControlName="telefono" placeholder="9587-7585">
+                </div>
+            </div>
+            <div class="mb-4 row">
+                <div class="col-md-2">
+                    <label for="password" class="col-sm-1 col-form-label">Contraseña</label>
+                </div>
+                <div class="col-md-4">
+                    <input class="form-control" id="password" formControlName="passw" value="">
+                    <small *ngIf="!validarPass" class="form-text text-muted">Mínimo 8 caracteres, una letra mayúscula, un
+                        número y un caracter especial (/#$%!) </small>
+                </div>
+                <div class="col-md-2">
+                    <label for="password2" class="col-form-label">Confirmar Contraseña</label>
+                </div>
+                <div class="col-md-4">
+                    <input class="form-control" id="password2" formControlName="passw2" value="">
+                    <small *ngIf="!validarPass2; else contra" class="form-text text-muted">Repetir la contraseña</small>
+                    <ng-template #contra>
+                        <small *ngIf="this.registroForm?.errors?.['mismatch']">La contraseña no es igual</small>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="mb-4 row">
+                <div class="col-md-2">
+                    <label for="ciudad" class="form-label">Departamento</label>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select" id="departamento" formControlName="departamento">
+                        <option selected disabled value="">Elegir...</option>
+                        <option *ngFor="let depto of departamentos" [ngValue]="depto.Id">{{depto.nombre}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="departamento" class="form-label">Municipio</label>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select" id="ciudad" formControlName="municipio">
+                        <option selected disabled value="">Elegir...</option>
+                        <option *ngFor="let municipio of filtrarMunicipios" [ngValue]="municipio.Id">{{municipio.nombre}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-4 row">
+                <div class="col-md-2">
+                    <label for="direccion" class="form-label">Dirección</label>
+                </div>
+                <div class="col-md-4">
+                    <textarea class="form-control" id="direccion" formControlName="direccion" rows="2"
+                        placeholder="Dirección exacta"></textarea>
+                </div>
+                <div class="col-md-2">
+                    <label for="direccion" class="form-label">Suscripción</label>
+                </div>        
+                <div class="col-md-4">
+                    <select class="form-select" id="Suscripcion" formControlName="suscripcion">
+                        <option selected >1 año</option>
+                        <option>2 años</option>
+                        <option>3 años</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-12 position-relative mb-4">
+                <button class="btn btn-dark position-absolute top-100 start-50 translate-middle" type="submit">Crear</button>
+            </div>
+        </form>
+	</div>
+</ng-template>
+
+
+<!--modal actualizar usuario-->
+<ng-template #actualizar let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Actualizar usuario</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+        <br>
+        <form class="row g-3" novalidate [formGroup]="actualizacionForm" (ngSubmit)="actualizarUsuario(); modal.close('Save click')">
+            <div class="mb-4 row">
+                <div class="col-md-2">
+                    <label for="nombre" class="col-sm-1 col-form-label">Nombre</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="nombre" formControlName="nombre" value="">
+                    <small *ngIf=""></small>
+                </div>
+                <div class="col-md-2">
+                    <label for="apellido" class="col-sm-1 col-form-label">Apellido</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="apellido" formControlName="apellido" value="">
+                </div>
+            </div>
+            <div class="mb-4 row">
+                <div class="col-md-2">
+                    <label for="correo" class="form-label">Correo</label>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="email" class="form-control" id="correo" formControlName="email"
+                            placeholder="usuario@server.com" aria-describedby="correo">
+                        <span class="input-group-text" id="correo" style="border: 1px solid black;">@</span>
+                    </div>
+                    <small *ngIf="!validarCorreoActualizacion">Ingrese un correo correcto</small>
+                </div>
+                <div class="col-md-2">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="telefono" formControlName="telefono" placeholder="9587-7585">
+                </div>
+            </div>
+            <div class="mb-4 row">
+                <div class="col-md-2">
+                    <label for="ciudad" class="form-label">Departamento</label>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select" id="departamento" formControlName="departamento" (change)="filtrarMunicipiosActualizacion()">
+                        <option selected disabled value="">Elegir...</option>
+                        <option *ngFor="let depto of departamentos" [ngValue]="depto.Id">{{depto.nombre}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="departamento" class="form-label">Municipio</label>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select" id="ciudad" formControlName="municipio">
+                        <option selected disabled value="">Elegir...</option>
+                        <option *ngFor="let municipio of municipiosActualizacion" [ngValue]="municipio.Id">{{municipio.nombre}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-4 row">
+                <div class="col-md-2">
+                    <label for="direccion" class="form-label">Dirección</label>
+                </div>
+                <div class="col-md-4">
+                    <textarea class="form-control" id="direccion" formControlName="direccion" rows="2"
+                        placeholder="Dirección exacta"></textarea>
+                </div>
+                <div class="col-md-2">
+                    <label for="direccion" class="form-label">Suscripción</label>
+                </div>        
+                <div class="col-md-4">
+                    <select class="form-select" id="Suscripcion" formControlName="suscripcion">
+                        <option selected >1 año</option>
+                        <option>2 años</option>
+                        <option>3 años</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-12 position-relative mb-4">
+                <button class="btn btn-dark position-absolute top-100 start-50 translate-middle" type="submit">Actualizar</button>
+            </div>
+        </form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cerrar</button>
+	</div>
+</ng-template>

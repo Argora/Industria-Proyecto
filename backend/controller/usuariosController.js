@@ -454,6 +454,40 @@ exports.listaFavoritos = async (req,res)=>{
 
 }
 
+//Si ocurre un error durante la insersión de usuario, se borraran los datos insertados en pasos anteriores
+function insercionFallida(dato){
+    console.log('Borrando datos de registro fallido');
+    const connectBD = MySQLBD.conectar();
+    if(dato.paso == 1){
+        //Si se completo el paso 1 antes de fallar, se borraran datos de la tabla Usuarios
+        connectBD.query(`DELETE FROM Usuarios WHERE Id = ${dato.id}`, (err, resultado) => { 
+        if(err){
+            console.log({mensaje:'Error al eliminar usuario mal insertado'})
+        }
+    }); 
+}
+    if(dato.paso == 2 || dato.paso ==3){
+        //Si se completo el paso 2 o 3 tambien se borraran los datos de la tabla Telefonos
+        connectBD.query(`DELETE FROM Telefonos WHERE personaId = ${dato.id}`, (err, resultado) => { 
+            if(err){
+                console.log({mensaje:'Error al eliminar telefono mal insertado'})
+            }
+            else{
+                //borrando datos de tabla Usuarios
+                connectBD.query(`DELETE FROM Usuarios WHERE Id= ${dato.id}`, (err, resultado) => { 
+                    if(err){
+                        console.log({mensaje:'Error al eliminar usuario mal insertado'})
+                    }
+                });
+            }
+        });
+    
+    }
+    console.log("Close Connection");
+    connectBD.end();
+
+ };
+
 exports.verificarTiempoToken = async(req, res) => {
     const {token} = req.body
     const data = getTokenData(token);

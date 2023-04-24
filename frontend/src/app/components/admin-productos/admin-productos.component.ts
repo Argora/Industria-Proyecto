@@ -158,9 +158,8 @@ export class AdminProductosComponent implements OnInit {
   }
 
   getCategorias() {
-
+    //Petición para obtener lista de categorias
     this.productoServicio.getDatosRegistroProducto().subscribe(data => {
-
       if (data.exito) {
         console.log(data.mensaje);
         this.allCategorias = data.categorias;
@@ -168,7 +167,6 @@ export class AdminProductosComponent implements OnInit {
       else {
         console.log(data.mensaje);
       }
-
     }, err => console.log(err));
   }
 
