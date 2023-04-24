@@ -7,7 +7,7 @@ import { io } from 'socket.io-client';
 })
 export class SocketioService {
 
-  io = io("http://localhost:3000",{
+  io = io("https://hondumarket-info.store:3000",{
     withCredentials:true,
     autoConnect: false
   });

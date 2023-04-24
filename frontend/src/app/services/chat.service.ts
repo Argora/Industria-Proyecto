@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
 })
 export class ChatService {
 
-  //url = 'https://hondumarket-info.store:3000/api/chat'
+  url = 'https://hondumarket-info.store:3000/api/chat'
   //URL LOCAL
-  url = 'http://localhost:3000/api/chat'
+  // url = 'http://localhost:3000/api/chat'
 
   constructor(private http:HttpClient) { }
 
