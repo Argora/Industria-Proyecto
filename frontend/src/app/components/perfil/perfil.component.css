@@ -11,3 +11,28 @@ i{
     color: darkblue;
     font-size: 25px;
 }
+
+.plan-1{
+    background-color: #0994d9;
+}
+
+.comprar-1{
+    background-color: #0994d9;
+}
+
+.plan-2{
+    background-color: #873bff;
+}
+
+.comprar-2{
+    background-color: #873bff;
+}
+
+.plan-3{
+    background-color: #191414;
+    color: aliceblue;
+}
+
+.comprar-3{
+    background-color: #191414;
+}

@@ -25,7 +25,7 @@ export class PerfilComponent implements OnInit {
     email: '',
     telefono: ''
   }
-
+  plan : number;
   closeResult = '';
 
   constructor(
@@ -136,7 +136,7 @@ export class PerfilComponent implements OnInit {
     this.productoServicio.getDatosRegistroProducto().subscribe(data => {
 
       if (data.exito) {
-        console.log(data);
+        console.log(data.mensaje);
         this.allCategorias = data.categorias;
       }
       else {
@@ -161,6 +161,14 @@ export class PerfilComponent implements OnInit {
         //this.router.navigate(['login']);
       }
     })
+  }
+
+  setPlan(plan : number){
+    this.plan = plan;
+  }
+
+  comprarPremium(){
+    console.log('comprar paquete '+this.plan);
   }
 
   open(content) {
