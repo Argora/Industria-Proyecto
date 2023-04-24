@@ -80,24 +80,26 @@ exports.registrarUsuario = async (req, res) => {
                                     if (err) {
                                         res.send({mensaje:'Error al guardar datos de session',guardado:0});
                                         insercionFallida({paso:3,id:UsuarioRes.insertId});
+                                        console.log("Close Connection");
+                                        conectBD.end();
                                     }else {
-                                        conectBD.query(`INSERT INTO Suscripciones(clienteId, estado, tipoSuscripcion, endpoint) VALUES (${UsuarioRes.insertId}, 1, ${suscripcion}, '${endpoint}')`, (err) => {
-                                            if (err) {
-                                                res.send({mensaje:'Error al guardar la suscripcion',guardado:0});
-                                            }else {
-                                                res.send({mensaje:'suscripcion insertada',guardado:1});
-                                            }
-                                        })
-                                        //Generando token de identificación para correo
-                                        const token = getTokenEmail(email);
-                                        //Cargando template de correo de confirmación
-                                        const template = getVerifyTemplate(nombre+' '+apellido,token);
-                                        //Enviando correo de confirmación
-                                        sendEmailVerify(email,'Confirmar Cuenta',template);
-                                        res.send({mensaje:'Usuario insertado',guardado:1});
-                                    }
-                                    console.log("Close Connection");
-                                    conectBD.end();
+                                            conectBD.query(`INSERT INTO Suscripciones(clienteId, estado, tipoSuscripcion, endpoint) VALUES (${UsuarioRes.insertId}, 1, ${suscripcion}, '${endpoint}')`, (err) => {
+                                                if (err) {
+                                                    res.send({mensaje:'Error al guardar la suscripcion',guardado:0});
+                                                }else {
+                                                    res.send({mensaje:'Suscripcion insertada',guardado:1});
+                                                }
+                                            })
+                                            console.log("Close Connection");
+                                            conectBD.end();
+                                            //Generando token de identificación para correo
+                                            const token = getTokenEmail(email);
+                                            //Cargando template de correo de confirmación
+                                            const template = getVerifyTemplate(nombre+' '+apellido,token);
+                                            //Enviando correo de confirmación
+                                            sendEmailVerify(email,'Confirmar Cuenta',template);
+                                            res.send({mensaje:'Usuario insertado',guardado:1});
+                                        }
                                     });
                                 }
                             });
