@@ -23,7 +23,8 @@ export class PerfilComponent implements OnInit {
     apellido: '',
     departamento: '',
     email: '',
-    telefono: ''
+    telefono: '',
+    diasRestantes:''
   }
   plan : number;
   closeResult = '';
@@ -44,8 +45,10 @@ export class PerfilComponent implements OnInit {
     this.usuarioServicio.getPerfilUsuario(id).subscribe(data => {
       if (data.exito) {
         console.log(data.mensaje);
+        //data.usuario contiene los datos del usuario actual
         this.usuario = data.usuario
-        //console.log(this.usuario)
+        console.log(this.usuario)
+        //si se ejecuta una funcion aqui, this.usuario contiene el id y los dias restantes del usuario actual
       }
       else {
         console.log(data.mensaje);

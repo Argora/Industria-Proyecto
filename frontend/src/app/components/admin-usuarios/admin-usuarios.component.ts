@@ -44,6 +44,8 @@ export class AdminUsuariosComponent implements OnInit {
     this.adminServicio.getUsuariosAdmin().subscribe(data => {
       if(data.exito){
         console.log(data.mensaje);
+        //data.usuarios contiene todos los usuarios registrados
+        //console.log(data.usuarios);
         this.AllUsuarios = data.usuarios;
         //console.log(this.AllUsuarios)
       }else{
