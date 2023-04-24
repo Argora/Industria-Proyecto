@@ -39,7 +39,7 @@ exports.getDeptosMunicipios = async (req, res) => {
 exports.registrarUsuario = async (req, res) => {
 
     //CAPTURA DE DATOS,saque municipio
-    const {nombre,apellido,email,passw,municipio,telefono,direccion} = req.body;
+    const {nombre,apellido,email,passw,municipio,telefono,direccion, suscripcion, endpoint} = req.body;
     
      // INICIAR CONEXION
     const conectBD = MySQLBD.conectar();
@@ -81,6 +81,13 @@ exports.registrarUsuario = async (req, res) => {
                                         res.send({mensaje:'Error al guardar datos de session',guardado:0});
                                         insercionFallida({paso:3,id:UsuarioRes.insertId});
                                     }else {
+                                        conectBD.query(`INSERT INTO Suscripciones(clienteId, estado, tipoSuscripcion, endpoint) VALUES (${UsuarioRes.insertId}, 1, ${suscripcion}, '${endpoint}')`, (err) => {
+                                            if (err) {
+                                                res.send({mensaje:'Error al guardar la suscripcion',guardado:0});
+                                            }else {
+                                                res.send({mensaje:'suscripcion insertada',guardado:1});
+                                            }
+                                        })
                                         //Generando token de identificación para correo
                                         const token = getTokenEmail(email);
                                         //Cargando template de correo de confirmación

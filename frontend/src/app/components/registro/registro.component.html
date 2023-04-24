@@ -99,12 +99,13 @@
 
         <div class="col-md-4">
             <select class="form-select" id="Suscripcion" formControlName="suscripcion">
-                <option selected >1 año</option>
+                <option selected value="1">1 año</option>
 
-                <option>2 años</option>
+                <option value="2">2 años</option>
 
-                <option>3 años</option>
+                <option value="3">3 años</option>
             </select>
+            <!-- <app-comprar-premium></app-comprar-premium> -->
             <small class="form-text text-muted">*Por favor necesitamos que permita las notificaciones</small>
             <input class="form-check-input" style="margin-left: 5px;" type="checkbox" value="" id="notificacion" (click)="subscribeToNotifications()">
         </div>
