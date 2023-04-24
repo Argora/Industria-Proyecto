@@ -13,8 +13,8 @@
             <tbody>
             <tr *ngFor="let pro of allProductos">
                 <td class="id">{{pro.Id}}</td>
-                <td [routerLink]="['/producto/detalle', pro.Id]">{{pro.nombre}}</td>
-                <td [routerLink]="['/vendedor', pro.personaId]">{{pro.Usuario}}</td>
+                <td [routerLink]="['/productos/detalles', pro.Id]">{{pro.nombre}}</td>
+                <td >{{pro.Usuario}}</td>
                 <td >{{ pro.creacion | date: 'shortDate' }}</td>
                 <td >{{pro.actualizacion}}</td>
                 <td>
@@ -71,9 +71,6 @@
                 <button class="btn btn-dark mt-5" type="submit">Actualizar</button>
             </div>
         </form>
-	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cerrar</button>
 	</div>
 </ng-template>
 
@@ -135,8 +132,5 @@
                 <button class="btn btn-dark mt-5" type="submit">Registrar</button>
             </div>
         </form>
-	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cerrar</button>
 	</div>
 </ng-template>

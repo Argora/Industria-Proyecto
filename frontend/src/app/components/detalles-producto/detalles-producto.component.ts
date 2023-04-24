@@ -24,6 +24,7 @@ export class DetallesProductoComponent implements OnInit {
   marcado = false;
   userId : number;
   user = false;
+  admin = false;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -138,6 +139,15 @@ export class DetallesProductoComponent implements OnInit {
         this.userId = data.data.data.id;
         this.user = true;
         //console.log(this.user)
+        if(data.data.data.tipoUsuario==1){
+          //console.log('usuario normal')
+          this.admin = false;
+          this.user = true;
+        }else{
+          //console.log('usuario admin');
+          this.admin = true;
+          this.user = false;
+        }
         this.estadoFavorito();
       }
       else {

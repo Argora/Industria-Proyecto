@@ -22,4 +22,25 @@ export class AdminService {
 
     return this.http.put(this.url+`/actualizarProductoAdmin`,req_body);
   };
+
+  getUsuariosAdmin():Observable<any> {
+
+    return this.http.get(this.url+'/getUsuariosAdmin');
+  };
+
+  postRegistrarUsuarioAdmin( req_body : any ):Observable<any> {
+
+    return this.http.post(this.url+'/registrarUsuarioAdmin',req_body);
+  };
+
+  eliminarUsuario(id: number):Observable<any> {
+
+    return this.http.delete(this.url+`/borrarUsuario/${id}`);
+  };
+
+  actualizarUsuarioAdmin(req_body : any):Observable<any> {
+
+    return this.http.put(this.url+`/actualizarUsuarioAdmin`,req_body);
+  };
+
 }
